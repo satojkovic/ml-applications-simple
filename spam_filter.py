@@ -6,10 +6,11 @@ import docclass
 
 def main():
     cl = docclass.classifier(docclass.getwords)
-    cl.train('the quick brown fox jumps over the lazy dog', 'good')
-    cl.train('make quick money in the online casino', 'bad')
-    print cl.fcount('quick', 'good')
-
+    docclass.sampletrain(cl)
+    print cl.fprob('quick', 'good')
+    print cl.weighted_prob('money', 'good', cl.fprob)
+    docclass.sampletrain(cl)
+    print cl.weighted_prob('money', 'good', cl.fprob)
 
 if __name__ == '__main__':
     main()

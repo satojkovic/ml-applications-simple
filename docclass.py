@@ -61,3 +61,14 @@ class classifier:
         for f in features:
             self.incf(f, cat)
         self.incc(cat)
+
+    def fprob(self, f, cat):
+        if self.catcount(cat) == 0:
+            return 0
+        return self.fcount(f, cat) / self.catcount(cat)
+
+    def weighted_prob(self, f, cat, prf, weight=1.0, ap=0.5):
+        basicprob = prf(f, cat)
+        totals = sum([self.fcount(f, c) for c in self.categories()])
+        bp = ((weight * ap) + (totals * basicprob)) / (weight + totals)
+        return bp
