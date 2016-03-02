@@ -72,3 +72,12 @@ class classifier:
         totals = sum([self.fcount(f, c) for c in self.categories()])
         bp = ((weight * ap) + (totals * basicprob)) / (weight + totals)
         return bp
+
+
+class naivebayes(classifier):
+    def docprob(self, item, cat):
+        features = self.getfeatures
+        p = 1
+        for f in  features:
+            p *= self.weighted_prob(f, cat, self.fprob)
+        return p
