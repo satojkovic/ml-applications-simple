@@ -12,5 +12,10 @@ def main():
     docclass.sampletrain(cl)
     print cl.weighted_prob('money', 'good', cl.fprob)
 
+    clnb = docclass.naivebayes(docclass.getwords)
+    docclass.sampletrain(clnb)
+    print clnb.prob('quick rabbit', 'good')
+    print clnb.prob('quick rabbit', 'bad')
+
 if __name__ == '__main__':
     main()

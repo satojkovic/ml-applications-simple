@@ -76,8 +76,13 @@ class classifier:
 
 class naivebayes(classifier):
     def docprob(self, item, cat):
-        features = self.getfeatures
+        features = self.getfeatures(item)
         p = 1
-        for f in  features:
+        for f in features:
             p *= self.weighted_prob(f, cat, self.fprob)
         return p
+
+    def prob(self, item, cat):
+        catprob = self.catcount(cat) / self.totalcount()
+        docprob = self.docprob(item, cat)
+        return docprob * catprob
