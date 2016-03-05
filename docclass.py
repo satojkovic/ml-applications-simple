@@ -75,6 +75,18 @@ class classifier:
 
 
 class naivebayes(classifier):
+    def __init__(self, getfeatures):
+        classifier.__init__(self, getfeatures)
+        self.threshold = {}
+
+    def setthreshold(self, cat, t):
+        self.threshold[cat] = t
+
+    def getthreshold(self, cat):
+        if cat not in self.threshold:
+            return 1.0
+        return self.threshold[cat]
+
     def docprob(self, item, cat):
         features = self.getfeatures(item)
         p = 1
@@ -86,3 +98,19 @@ class naivebayes(classifier):
         catprob = self.catcount(cat) / self.totalcount()
         docprob = self.docprob(item, cat)
         return docprob * catprob
+
+    def classify(self, item, default=None):
+        probs = {}
+        max = 0.0
+        for cat in self.categories():
+            probs[cat] = self.prob(item, cat)
+            if probs[cat] > max:
+                max = probs[cat]
+                best = cat
+
+        for cat in probs:
+            if cat == best:
+                continue
+            if probs[cat] * self.getthreshold(best) > probs[best]:
+                return default
+        return best
