@@ -26,6 +26,8 @@ def main():
     print clfs.cprob('quick', 'good')
     print clfs.cprob('money', 'bad')
     print clfs.weighted_prob('money', 'bad', clfs.cprob)
+    print clfs.fisherprob('quick rabbit', 'good')
+    print clfs.fisherprob('quick rabbit', 'bad')
 
 if __name__ == '__main__':
     main()

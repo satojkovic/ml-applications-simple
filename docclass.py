@@ -123,3 +123,19 @@ class fisherclassifier(classifier):
         freqsum = sum([self.fprob(f, c) for c in self.categories()])
         p = clf / freqsum
         return p
+
+    def fisherprob(self, item, cat):
+        p = 1
+        features = self.getfeatures(item)
+        for f in features:
+            p *= (self.weighted_prob(f, cat, self.cprob))
+        fscore = -2 * math.log(p)
+        return self.invchi2(fscore, len(features) * 2)
+
+    def invchi2(self, chi, df):
+        m = chi / 2.0
+        sum = term = math.exp(-m)
+        for i in range(1, df//2):
+            term *= m / i
+            sum += term
+        return min(sum, 1.0)
