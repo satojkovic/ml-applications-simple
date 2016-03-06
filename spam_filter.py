@@ -21,5 +21,11 @@ def main():
     clnb.setthreshold('bad', 3.0)
     print clnb.classify('quick money', default='unknown')
 
+    clfs = docclass.fisherclassifier(docclass.getwords)
+    docclass.sampletrain(clfs)
+    print clfs.cprob('quick', 'good')
+    print clfs.cprob('money', 'bad')
+    print clfs.weighted_prob('money', 'bad', clfs.cprob)
+
 if __name__ == '__main__':
     main()
