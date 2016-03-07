@@ -28,6 +28,8 @@ def main():
     print clfs.weighted_prob('money', 'bad', clfs.cprob)
     print clfs.fisherprob('quick rabbit', 'good')
     print clfs.fisherprob('quick rabbit', 'bad')
+    print clfs.classify('quick rabbit')
+    print clfs.classify('quick money')
 
 if __name__ == '__main__':
     main()
