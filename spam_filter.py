@@ -2,6 +2,24 @@
 # -*- coding: utf-8 -*-
 
 import docclass
+import feedparser
+import re
+
+
+def feedclassifier(feed, classifier):
+    f = feedparser.parse(feed)
+    for entry in f['entries']:
+        print
+        print '-----'
+        print 'Title', entry['title'].encode('utf-8')
+
+        fulltext = '%s\n%s' % (entry['title'],
+                               entry['content'])
+
+        print 'Guess:', str(classifier.classify(fulltext))
+        #cl = raw_input('Enter category: ')
+        cl = 'python'
+        classifier.train(fulltext, cl)
 
 
 def main():
@@ -30,6 +48,11 @@ def main():
     print clfs.fisherprob('quick rabbit', 'bad')
     print clfs.classify('quick rabbit')
     print clfs.classify('quick money')
+
+    clfs2 = docclass.fisherclassifier(docclass.getwords)
+    feedclassifier('feed_sample2.rss', clfs2)
+    print clfs2.cprob('Pandas', 'python')
+    print clfs2.cprob('python', 'python')
 
 if __name__ == '__main__':
     main()
