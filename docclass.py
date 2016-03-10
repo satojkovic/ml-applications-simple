@@ -5,6 +5,7 @@ import numpy as np
 import re
 import math
 from collections import defaultdict
+from sqlite3 import dbapi2 as sqlite
 
 
 def getwords(doc):
@@ -72,6 +73,11 @@ class classifier:
         totals = sum([self.fcount(f, c) for c in self.categories()])
         bp = ((weight * ap) + (totals * basicprob)) / (weight + totals)
         return bp
+
+    def setdb(self, dbfile):
+        self.con = sqlite.connect(dbfile)
+        self.con.execute('create table if not exists fc(feature, category, count)')
+        self.con.execute('create table if not exists cc(category, count)')
 
 
 class naivebayes(classifier):
