@@ -24,6 +24,7 @@ def feedclassifier(feed, classifier):
 
 def main():
     cl = docclass.classifier(docclass.getwords)
+    cl.setdb('test1.db')
     docclass.sampletrain(cl)
     print cl.fprob('quick', 'good')
     print cl.weighted_prob('money', 'good', cl.fprob)
@@ -31,6 +32,7 @@ def main():
     print cl.weighted_prob('money', 'good', cl.fprob)
 
     clnb = docclass.naivebayes(docclass.getwords)
+    clnb.setdb('test1.db')
     docclass.sampletrain(clnb)
     print clnb.prob('quick rabbit', 'good')
     print clnb.prob('quick rabbit', 'bad')
@@ -40,6 +42,7 @@ def main():
     print clnb.classify('quick money', default='unknown')
 
     clfs = docclass.fisherclassifier(docclass.getwords)
+    clfs.setdb('test1.db')
     docclass.sampletrain(clfs)
     print clfs.cprob('quick', 'good')
     print clfs.cprob('money', 'bad')
@@ -50,6 +53,7 @@ def main():
     print clfs.classify('quick money')
 
     clfs2 = docclass.fisherclassifier(docclass.getwords)
+    clfs2.setdb('test1.db')
     feedclassifier('feed_sample2.rss', clfs2)
     print clfs2.cprob('Pandas', 'python')
     print clfs2.cprob('python', 'python')
